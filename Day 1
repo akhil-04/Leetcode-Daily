@@ -1,0 +1,100 @@
+Problem is ->  Search in roated and sorted Array
+
+If stuck Link for logic => https://www.youtube.com/watch?v=oTfPJKGEHcc&ab_channel=TECHDOSE
+
+Logic -> We can do this in 2 ways 1. Two Binary Search traversals in this we first find the pivot element and then do the BS but this takes so time 2. 1 traversal BS just use the condition of rotated and sorted array in this we just check the conditions of left and mid and apply simple BS . mid== target return mid else mid > arr[L] then check one more condition like is the target present in in that left to mid if yes then make right = mid-1 else serach in next part as we did earlier. In this question 1 part must be the strictly incresing so use that logic.
+
+code -> 1 BS Travel method 
+
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0;
+        int right = n-1;
+       //Iterative binary search
+        while(left<=right)
+        {
+            int mid = (left+right)/2;
+            //system.out.println(nums[mid]);
+            if(nums[mid]==target)
+                return mid;
+            else if(nums[mid]>=nums[left])
+            {
+                if(target<=nums[mid] && target>=nums[left])
+                    right = mid-1;
+                else
+                    left = mid+1;
+            }
+            else
+            {
+                if(target>=nums[mid] && target<=nums[right])
+                    left = mid+1;
+                else
+                    right = mid-1;
+            }
+        }
+        return -1;
+    }
+}
+
+
+
+
+2 BS traversal Method 
+Code
+
+class Solution {
+    int find_pivot(vector<int>& nums,int left,int right)
+    {
+        if(nums[left] < nums[right])
+            return 0;
+        
+        int mid;
+        //Iterative binary search
+        while(left<right)
+        {
+            mid = (left+right)/2;
+            if(nums[mid]>nums[mid+1])
+                return mid;
+            else if(nums[mid]<nums[0])
+                right = mid;
+            else
+                left = mid+1;
+        }
+        return mid;
+    }
+    
+    int binary_search(vector<int>& nums,int left,int right,int target)
+    {
+        int mid;
+        //Iterative binary search
+        while(left<=right)
+        {
+            mid = (left+right)/2;
+            if(nums[mid]==target)
+                return mid;
+            else if(nums[mid]>target)
+                right = mid-1;
+            else
+                left = mid+1;
+        }
+        return -1;
+    }
+public:
+    int search(vector<int>& nums, int target) {
+        //For Fast I/O in C++
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        int n = nums.size();
+        if(n==0)
+            return -1;
+        else if(n==1)
+            return nums[0]==target?0:-1;
+        
+        int pivot = find_pivot(nums,0,n-1);
+        if(nums[pivot]==target)
+            return pivot;
+        
+        return target>nums[n-1]?binary_search(nums,0,pivot,target):binary_search(nums,pivot+1,n-1,target);
+    }
+};
