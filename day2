@@ -1,0 +1,71 @@
+Logic ->  There are many methods to do this 1.) Traverse through arr and make hashmap and then sort the hashmap and give top k frequent elements TC is n2 SC is N 2.) build hashamp and then put hasmap every node in the max PQ and then give top k root elements TC is NlogN SC is N+k n for map and k for PQ 3.) Best Way Bucket Sort make hashmap of frequncy then make array of index and in that put the elements and then last se dekho and jaise hi k  equal aa jao then sab ko arr me dal k print krdo done 
+
+video link -> https://www.youtube.com/watch?v=CIDmkhR65RY&ab_channel=codebix
+
+Code- >
+class Solution {
+    //Bucket sort
+    public int[] topKFrequent(int[] nums, int k) {
+         List<Integer>[] bucket = new List[nums.length + 1];
+	 HashMap<Integer, Integer> hm = new HashMap<>();
+        
+        for(int i=0;i<nums.length;i++){
+            hm.put(nums[i], hm.getOrDefault(nums[i], 0) + 1);
+        }
+        
+        for(int i: hm.keySet()){
+            int frequency = hm.get(i);
+            if(bucket[frequency] == null){
+                bucket[frequency] = new ArrayList<>();
+            }
+            bucket[frequency].add(i);
+        }
+        
+        int ans[] = new int[k];
+        int count = 0;
+        
+        for(int i=bucket.length-1;i>=0;i--){
+            if(bucket[i] != null){
+                for(int j =0; j <bucket[i].size(); j++)
+              ans[count++] = bucket[i].get(j);
+            }
+            
+            if(count == k)  break;
+        }
+        return ans;
+    }
+    
+    
+//     public int[] topKFrequent(int[] nums, int k) {
+//         // O(1) time
+//         if (k == nums.length) {
+//             return nums;
+//         }
+        
+//         // 1. build hash map : character and how often it appears
+//         // O(N) time
+//         Map<Integer, Integer> count = new HashMap();
+//         for (int n: nums) {
+//           count.put(n, count.getOrDefault(n, 0) + 1);
+//         }
+
+//         // init heap 'the less frequent element first'
+//         Queue<Integer> heap = new PriorityQueue<>(
+//             (n1, n2) -> count.get(n1) - count.get(n2));
+
+//         // 2. keep k top frequent elements in the heap
+//         // O(N log k) < O(N log N) time
+//         for (int n: count.keySet()) {
+//           heap.add(n);
+//           if (heap.size() > k) heap.poll();    
+//         }
+
+//         // 3. build an output array
+//         // O(k log k) time
+//         int[] top = new int[k];
+//         for(int i = k - 1; i >= 0; --i) {
+//             top[i] = heap.poll();
+//         }
+//         return top;
+//     }
+}
