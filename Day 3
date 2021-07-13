@@ -1,0 +1,32 @@
+Problem -> Validate BST 
+
+logic ->  Just simple apply recusrion and check every node is that node is matching all the conditions if root is null return true, we have taken long because a node can be value int max/min so we take long and then check is the node value is valid, if yes then we just call recusrion on left and right, on left just full left to node val and for right node.val to full right. 
+Code 2 logic is we pass null instead of Long.max/min so that they handle the most of the test cases and makes things fast and then if null true, and then most same logic
+
+code 1. -> public boolean isValidBST(TreeNode root) {
+       return valid(root,Long.MIN_VALUE,Long.MAX_VALUE);
+    }
+    public boolean valid(TreeNode node, long start, long end){
+        if(node == null){
+            return true;
+        }
+        
+        if(start<node.val && node.val<end){
+            return valid(node.left,start,node.val) && valid(node.right,node.val,end);
+        }
+        return false;
+    }
+
+
+Code 2.->  public boolean isValidBST(TreeNode root) {        
+        return helper(root, null, null);   
+    }
+    
+    private boolean helper(TreeNode root, TreeNode min, TreeNode max) {
+        if (root == null) 
+            return true;
+        if ((min != null && root.val <= min.val) || (max != null && root.val >= max.val))
+            return false;
+
+        return helper(root.left, min, root) && helper(root.right, root, max);
+    }
