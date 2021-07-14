@@ -1,0 +1,37 @@
+problem -> Rotate array by K
+
+Logic -> Brute force is easy just swap things k times TC is N*K Another Sol -> just make a new array of size nums and then put the i+k elements in array and then put the rest TC is N SC is N Best Sol -> just reverse whole array and then reverse 1st k-1 elements and then reverse k to last and you get your ans. TO reverse loop till start<end and then just start swaping with nums[start]=nums[end and start++, end--; you get your result.
+
+Code -> class Solution {
+    
+    
+    
+    //optimal and best TC is N SC is 1
+//     public void reverse(int nums[],int start,int end){
+//         while(start<end){
+//             int temp = nums[start];
+//             nums[start] = nums[end];
+//             nums[end] = temp;
+//             start++;
+//             end--;
+//         }
+//     }
+    
+//      public void rotate(int[] nums, int k) {
+//          k = k%nums.length;
+//         reverse(nums,0,nums.length-1);
+//          reverse(nums,0,k-1);
+//          reverse(nums,k,nums.length-1);
+//      }
+    
+    // TC is N and SC is N
+  // public void rotate(int[] nums, int k) {
+  //   int[] a = new int[nums.length];
+  //   for (int i = 0; i < nums.length; i++) {
+  //     a[(i + k) % nums.length] = nums[i];
+  //   }
+  //   for (int i = 0; i < nums.length; i++) {
+  //     nums[i] = a[i];
+  //   }
+  // }
+}
