@@ -1,0 +1,107 @@
+Problem ->  Basic Calculator 2
+
+Without stack is better than the with stack
+
+Logic -> WITH STACK
+          Algorithm
+Scan the input string s from left to right and evaluate the expressions based on the following rules
+If the current character is a digit 0-9 ( operand ), add it to the number currentNumber.
+Otherwise, the current character must be an operation (+,-,*, /). Evaluate the expression based on the type of operation.
+Addition (+) or Subtraction (-): We must evaluate the expression later based on the next operation. So, we must store the currentNumber to be used later. Let's push the currentNumber in the Stack. 
+
+WITHOUT STACK
+Algorithm
+The approach works similar to Approach 1 with the following differences :
+Instead of using a stack, we use a variable lastNumber to track the value of the last evaluated expression.
+If the operation is Addition (+) or Subtraction (-), add the lastNumber to the result instead of pushing it to the stack. The currentNumber would be updated to lastNumber for the next iteration.
+If the operation is Multiplication (*) or Division (/), we must evaluate the expression lastNumber * currentNumber and update the lastNumber with the result of the expression. This would be added to the result after the entire string is scanned.
+
+
+Code ->  class Solution {
+    
+    //WITH STACK TC is O(N) SC is O(1)
+    public int calculate(String s) {
+       if(s==null || s.length()==0) return 0;
+        
+        // Stack<Integer> st = new Stack<>();
+        int curr = 0;
+        char operation = '+';
+        char []ch = s.toCharArray();
+        int sum = 0;
+        int last = 0;
+        
+        for(int i=0;i<ch.length;i++){
+             //this case where we handle the digits
+            if(Character.isDigit(ch[i])){
+                //we just need to add in current means we are making number here
+                curr = curr*10 + ch[i] - '0';
+            }
+            
+            //this case where we handle the operations 
+            if(!Character.isDigit(ch[i]) && ch[i] != ' ' || i == ch.length - 1){
+                //this xan have 4 operations 
+                if(operation == '+'){
+                    //we taken + at start and we have 1st number so we just add in stack
+                   sum += last;
+                    last = curr;
+                }else if(operation == '-'){
+                    sum += last;
+                    last = -curr;
+                }else if(operation == '*'){
+                    last = last *curr;
+                }else if(operation == '/'){
+                    last = last / curr;
+                }
+                //for every iteration we have to reinitialize values 
+                operation = ch[i];
+                curr=0;
+            }
+         }
+       sum+=last;
+        return sum;
+    } 
+    
+    
+    //WITH STACK TC is O(N) SC is O(N)
+//     public int calculate(String s) {
+//        if(s==null || s.length()==0) return 0;
+        
+//         Stack<Integer> st = new Stack<>();
+//         int curr = 0;
+//         char operation = '+';
+//         char []ch = s.toCharArray();
+        
+//         for(int i=0;i<ch.length;i++){
+//              //this case where we handle the digits
+//             if(Character.isDigit(ch[i])){
+//                 //we just need to add in current means we are making number here
+//                 curr = curr*10 + ch[i] - '0';
+//             }
+            
+//             //this case where we handle the operations 
+//             if(!Character.isDigit(ch[i]) && ch[i] != ' ' || i == ch.length - 1){
+//                 //this xan have 4 operations 
+//                 if(operation == '+'){
+//                     //we taken + at start and we have 1st number so we just add in stack
+//                     st.push(curr);
+//                 }else if(operation == '-'){
+//                     st.push(-curr);
+//                 }else if(operation == '*'){
+//                     //we have our curr to digit and we have to multiply top of the stack 
+//                     st.push(st.pop() * curr);
+//                 }else if(operation == '/'){
+//                     st.push(st.pop() / curr);
+//                 }
+//                 //for every iteration we have to reinitialize values 
+//                 operation = ch[i];
+//                 curr=0;
+//             }
+//          }
+//         //we add all stack in our sum and return that 
+//         int sum = 0;
+//         while(!st.isEmpty()){
+//             sum = sum + st.pop();
+//         }
+//         return sum;
+//     }
+}
