@@ -1,0 +1,36 @@
+Problem ->  4 sum 2nd
+
+Logic -> brute force is simple 4loops and calculate TC is n4   Better way -> Take the arrays A and B, and compute all the possible sums of two elements. Put the sum in the Hash map, and increase the hash map value if more than 1 pair sums to the same value.
+Compute all the possible sums of the arrays C and D. If the hash map contains the opposite value of the current sum, increase the count of four elements sum to 0 by the counter in the map.  TC is O(n2)
+
+Code -> class Solution {
+//     Take the arrays A and B, and compute all the possible sums of two elements. Put the sum in the Hash map, and increase the hash map value if more than 1 pair sums to the same value.
+
+// Compute all the possible sums of the arrays C and D. If the hash map contains the opposite value of the current sum, increase the count of four elements sum to 0 by the counter in the map.
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        Map<Integer,Integer> map = new HashMap<>();
+        int count = 0;
+        
+        for(int i=0;i<nums1.length;i++){
+            for(int j=0;j<nums2.length;j++){
+                int sum = nums1[i] + nums2[j];
+                if(map.containsKey(sum)){
+                    map.put(sum,map.get(sum)+1);
+                }else{
+                    map.put(sum,1);
+                }
+            }
+        }
+        
+        for(int i=0;i<nums3.length;i++){
+            for(int j=0;j<nums4.length;j++){
+                int sum = -(nums3[i]+ nums4[j]);
+                
+                if(map.containsKey(sum)){
+                    count = count + map.get(sum);
+                }
+            }
+        }
+        return count;
+    }
+}
