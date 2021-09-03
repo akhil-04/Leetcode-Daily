@@ -1,0 +1,20 @@
+Problem -> Minimum Cost to Move Chips to The Same Position
+
+Logic -> hamme sab chips ko ek point pr leke jana hai, so agar hum 2  index aage ya piche jate hai to cost 0 hoti hai, and poition 1 index aage ya piche jae to cost 1 ho jaegi
+         code me hamne kia ki even, odd nikal lia agar even hai element to even++ else odd++  and jo min hoga vo lele ge hum 
+
+Code -> class Solution {
+    public int minCostToMoveChips(int[] arr) {
+          int even = 0,odd = 0;
+    
+    for(int i = 0; i < arr.length; i++){
+        if(arr[i] % 2 == 0){
+            even++;
+        }else{
+            odd++;
+        }
+    }
+        if(even == arr.length || odd == arr.length) return 0;
+    return Math.min(even, odd);
+    }
+}
