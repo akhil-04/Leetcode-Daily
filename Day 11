@@ -1,0 +1,56 @@
+Problem -> Delete the Nth node from last 
+
+Logic ->1st we can do by Two pass algo in which we first find the length of the LL and second we move to length-n+1 the node we wants to delete and length - n to store the previous node and just update length-n node to the length -n+2 th node , in this approach we take two pass over our LL, Another is One pass Solution we take ahead and before node which is on head and we 1st move ahead to n+1 and then while ahead!= null both ko aage leke chalo, by this our before will be on the jisko delete krna hai usse pahle wali node pr and then we just do the next = next.next and work done
+
+Code -> One pass Solution
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head ==  null) return head;
+        ListNode a = head;
+        ListNode b = head;
+        
+        for(int i=1;i<=n+1;i++){
+            if(a==null) return head.next;
+            a=a.next;
+        }
+        
+        while(a!=null){
+            a=a.next;
+            b=b.next;
+        }
+        b.next = b.next.next;
+        return head;
+    }
+    
+Two pass Solution
+
+	public ListNode removeNthFromEnd(ListNode head, int n) {
+       if(head == null)
+            return null;
+        
+        ListNode current = head;
+        int count = 1;
+        
+        while(current.next != null)
+        {
+            current = current.next;
+            count++;
+        }
+        
+        current = head;
+        
+        if(n > count)
+            return null;
+        else if(n == count)
+            return head.next;
+        
+        for(int i = 1; i < count - n; i++)
+        {
+            current = current.next;
+        }
+        
+        
+        current.next = current.next.next;
+        
+        return head;
+    }
