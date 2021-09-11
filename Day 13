@@ -1,0 +1,43 @@
+Problem -> Convert Unsorted Linked List into Binary Search Tree
+
+Logic -> 1st method is convert LL to array and then sort that array and then take mid point and make that as treenode and then use recursion for start to mid-1 and mid+1 to end for right and left part of BST 2method is make helper and pass head and tail as null, then find mid of LL via fast and slow and do in while fast!=tail && fast.next!=tail and then mid ko treenode ka root bna do and via recursion left of tree is head to slow and right of tree is slow to tail. if Unsorted LL then sort LL via merge sort and then do all this stuff
+
+Code -> class Solution {
+        public TreeNode sortedListToBST(ListNode head) {
+        List<Integer> arr = new ArrayList<>();
+        while (head != null) {
+            arr.add(head.val);
+            head = head.next;
+        }
+        return buildBST(arr, 0, arr.size() - 1);
+    }
+    TreeNode buildBST(List<Integer> list, int left, int right) {
+        if (left > right) return null;
+        int mid = left + (right - left) / 2;
+        TreeNode root = new TreeNode(list.get(mid));
+        root.left = buildBST(list, left, mid - 1);
+        root.right = buildBST(list, mid + 1, right);
+        return root;
+    }
+    
+    
+//     public TreeNode sortedListToBST(ListNode head) {
+//         if(head == null) return null;
+//         return toBst(head,null);
+//     }
+    
+//     public TreeNode toBst(ListNode head,ListNode tail){
+//         ListNode slow = head, fast = head;
+//         if(head == tail) return null;
+        
+//         while(fast!=tail && fast.next != tail){
+//             slow = slow.next;
+//             fast = fast.next.next;
+//         }
+        
+//         TreeNode root = new TreeNode(slow.val);
+//         root.left = toBst(head,slow);
+//         root.right = toBst(slow.next,tail);
+//         return root;
+//     }
+}
