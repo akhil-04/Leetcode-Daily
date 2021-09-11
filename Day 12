@@ -1,0 +1,16 @@
+Problem-> Can we reach to the end of the array
+
+Logic -> There are so many approaches to do this question like recursion, backtracking, DP, memoization but mostly alll of these will take n2 complexity So we try greedy approach here which takes (N) TC , what we do is we just make boundary each time by adding index and the array value at that index, by that we have a boundary that we can go to this boundary and we keep changing the bounday also and loop till that and as soon as we gone equal to or higher than the last index we retuen true , if in loop no tue so atlast we give answer as false
+
+Code -> class Solution {
+    public boolean canJump(int[] nums) {
+       int reach = 0;
+        for(int i=0;i<=reach;i++){
+            reach = Math.max(reach,i+nums[i]);
+            if(reach >= nums.length-1){
+                return true;
+            }
+        }
+        return false;
+    }
+}
